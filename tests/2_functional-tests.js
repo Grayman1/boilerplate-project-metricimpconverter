@@ -10,7 +10,7 @@ suite('Functional Tests', function() {
   suite('Routing Tests', () => {
 
     suite('GET /api/convert => conversion object', () => {
-    // TEST #1 - VALID INPUT
+    // FUNCTIONAL TEST #1 -- CONVERT A VALID INPUT
       test('Convert 10L (valid input)', (done) => {
         chai.request(server)
           .get('/api/convert')
@@ -25,7 +25,7 @@ suite('Functional Tests', function() {
           })
           done();
       })
-      // TEST #2 CONVERT AN INVALID INPUT SUCH AS 32g
+      // FUNCTIONAL TEST #2 -- CONVERT AN INVALID INPUT SUCH AS 32g
       test('Convert 32g (invalid input unit)', (done) => {
         chai.request(server)
           .get('/api/convert')
@@ -35,7 +35,7 @@ suite('Functional Tests', function() {
           })
           done();
       })
-      // TEST #3 CONVERT AN INVALID NUMBER SUCH AS 3/7.2/4KG
+      // FUNCTIONAL TEST #3 -- CONVERT AN INVALID NUMBER SUCH AS 3/7.2/4KG
       test('Convert 3/7.2/7kg (invalid number)', (done) => {
         chai.request(server)
           .get('/api/convert')
@@ -46,7 +46,7 @@ suite('Functional Tests', function() {
           done();
       });
 
-      // TEST #4 CONVERT AN INVALID NUMBER AND UNIT SUCH AS 3/7.2/4kilomegagram
+      // FUNCTIONAL TEST #4 -- CONVERT AN INVALID NUMBER AND UNIT SUCH AS 3/7.2/4kilomegagram
       test('Convert 3/7.2/7kilomegagram (invalid number and unit)', (done) => {
         chai.request(server)
           .get('/api/convert')
@@ -56,7 +56,7 @@ suite('Functional Tests', function() {
           })
           done();
       })
-    // TEST #5 CONVERT WITH NO NUMBER SUCH AS KG
+    // FUNCTIONAL TEST #5 CONVERT WITH NO NUMBER SUCH AS KG
       test('Convert kg (no number)', (done) => {
         chai.request(server)
           .get('/api/convert')

@@ -14,25 +14,36 @@ module.exports = function (app) {
       var initUnit = convertHandler.getUnit(input);
       var returnNum = convertHandler.convert(initNum, initUnit);
       var returnUnit = convertHandler.getReturnUnit(initUnit);
-      var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
+      var initUnitString = convertHandler.spellOutUnit(initUnit);
+      var returnUnitString = convertHandler.spellOutUnit(returnUnit);
+
+      var toString = convertHandler.getString(initNum, returnNum, initUnitString, returnUnitString);
+
+  
+
 
       if(initUnit === 'invalid unit' && initNum === 'invalid number') {
+       // USER STORY #9
         res.json('invalid number and unit')
       } else if(initUnit === 'invalid unit') {
+        // USER STORY #7
         res.json('invalid unit')
       } else if(initNum === 'invalid number') {
+        // USER STORY #8
         res.json('invalid number')
       }     
 
 
-      let responseObject = {}
-      responseObject['initNum'] = initNum
-      responseObject['initUnit'] = initUnit 
-      responseObject['returnNum'] = returnNum 
-      responseObject['returnUnit'] = returnUnit 
-      responseObject['string'] = toString 
 
-      res.json(responseObject)
+      // USER STORY #10 RETURN RESPONSE OBJECT
+      let resObject = {}
+      resObject['initNum'] = initNum
+      resObject['initUnit'] = initUnit 
+      resObject['returnNum'] = returnNum 
+      resObject['returnUnit'] = returnUnit 
+      resObject['string'] = toString 
+
+      res.json(resObject)
 
     })
 
