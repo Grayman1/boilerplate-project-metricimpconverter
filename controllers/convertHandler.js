@@ -1,8 +1,61 @@
 // RegEx expression for Stacker Overflow 40648145 javascript regext to split numbers and letters
-
-let inputRegex = /[a-z]+|[^a-z]+/gi
+let inputRegex = /[a-z]+|[^a-z]+/gi;
+let numberRegex = /\d/;
 
 function ConvertHandler() {
+
+
+//   >>>>   WORKING GETNUM FUNCTION   <<<<
+
+  this.getNum = function(input) {
+    let result;
+
+    const separatedInput = input.match(inputRegex);
+
+    if (separatedInput.length === 1) {
+      result = 1;
+    } else {
+      result = separatedInput[0];
+
+      if (result.match(/[a-z]+|\s/g)) {
+        result = "invalid number";
+      }
+
+      if (result.match(/\.+\d*\.+|\/\.|\.\/|^\/$/gi)) {
+        result = "invalid number";
+      } else if (result.match(/^\./g)) {
+        result = 0 + result;
+      } else if (result.match(/\.$/g)) {
+        result = result.replace(/\.$/, "");
+      } //
+
+      if (result.includes("/")) {
+        const value = result.split("/");
+        
+        // CHECK FOR NUMERATOR, DENOMINATOR
+        if (value.length !== 2) {
+          result = "invalid number";
+        } else {
+          result = (value[0] / value[1]).toFixed(5);
+        }
+      }
+    }
+    result = Number(result);
+    // CHECK IF NUMBER INPUT IS 0
+    if (result == 0) {
+      result = "invalid number";
+    }
+    // CHECK IF INPUT FIELD IS NOT BLANK AND NOT A NUMBER
+    if (isNaN(result)) {
+      result = "invalid number";
+    }
+    // FOR TESTING PURPOSES ONLY:
+//    console.log('getNum', result);
+    return result;
+  };
+
+
+//   >>>>>   WORKING GETUNIT CODE     <<<<<<
 
   this.getNum = function(input) {
     var result;
@@ -79,6 +132,7 @@ function ConvertHandler() {
     
     return result;
   };
+
   /*
   this.getNum = function(input) {
     let result;
@@ -107,6 +161,7 @@ function ConvertHandler() {
     return result;
   }; 
   
+>>>>>>> 2d63f9d7e1e37af9b78dc7107b52af063b53a4c1
   this.getUnit = function(input) {
     let result;
     let units;
@@ -125,11 +180,16 @@ function ConvertHandler() {
       } else {result = units.toLowerCase();
       } 
     } else {
-      result = 'invalid unit'      
+      return 'invalid unit'      
     }
+    // FOR TESTING PURPOSES ONLY:
+//    console.log('getUnit: ', result);
     return result;
   };
-  
+
+
+// >>>>>>   WORKING GETRETURNUNIT FUNCTION   <<<<<<
+
   this.getReturnUnit = function(initUnit) {
     let result;
     
@@ -150,76 +210,108 @@ function ConvertHandler() {
     } else if(initUnit === 'km' || initUnit === 'KM') {
       result = 'mi'
     }
-
+    // FOR TESTING PURPOSES ONLY:
+//    console.log('initUnit: ',initUnit, 'returnUnit: ', result);
     return result;
   };
 */
 
 
+
+//  >>>>>    WORKING SPELLOUTUNIT FUNCTION   <<<<
   this.spellOutUnit = function(unit) {
     let result;
-    switch(unit){
-      case "km":
-      case "KM":
-        result = "kilometer(s)";
-        break;
-      case "gal":
-      case "GAL":
-        result = "gallon(s)";
-        break;
-      case "l":
-      case "L":
-        result = "liter(s)";
-        break;
-      case "lbs":
-      case "LBS":
-        result = "pound(s)";
-        break;
-      case "kg":
-      case "KG":
-        result = "kilogram(s)";
-        break;
-      case "mi":
-      case "MI":
-        result = "mile(s)";
-        break;
-    }
+    const shortUnit = ["gal", "L", "km", "mi", "lbs", "kg"];
+    const fullUnit = [
+      "gallons",
+      "litres",
+      "kilometers",
+      "miles",
+      "pounds",
+      "kilograms"
+    ];
 
+    if (shortUnit.includes(unit)) {
+      let fullUnitIndex = shortUnit.indexOf(unit);
+      result = fullUnit[fullUnitIndex];
+    }
+    // FOR TESTING PURPOSES ONLY:
+//    console.log("spellOutUnit: ", result);
     return result;
   };
-  
+
+
+
+  //   >>>>>   WORKING CONVERT FUNCTION   <<<<<<
   this.convert = function(initNum, initUnit) {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
-    
-    if(initUnit === 'gal' || initUnit === 'GAL') {
-      // Convert GALLONS to LITERS
-      result = (initNum * galToL).toFixed(5)
-    } else if(initUnit === 'l' || initUnit === 'L') {
-      // Convert LITERS to GALLONS 
-      result = (initNum / galToL).toFixed(5)
+
+    /*if (initUnit === "gal"){
+      result = (initNum * galToL).toFixed(5);
+    } else if (initUnit === "L"){
+      result = (initNum / galToL).toFixed(5);
+    }*/ 
+
+    switch (initUnit) {
+      case "gal":
+        result = (initNum * galToL).toFixed(5);
+        break;
+      case "L":
+        result = (initNum / galToL).toFixed(5);
+        break;
+      case "lbs":
+        result = (initNum * lbsToKg).toFixed(5);
+        break;
+      case "kg":
+        result = (initNum / lbsToKg).toFixed(5);
+        break;
+      case "mi":
+        result = (initNum * miToKm).toFixed(5);
+        break;
+      case "km":
+        result = (initNum / miToKm).toFixed(5);
     }
 
-    if(initUnit === 'km' || initUnit === 'KM') {
-      // Convert KM to MILES
-      result = (initNum / miToKm).toFixed(5)
-    } else if(initUnit === 'mi' || initUnit === 'MI') {
-      // Convert MILES to KM
-      result = (initNum * miToKm).toFixed(5)
-    }
-
-    if(initUnit === 'lbs' || initUnit === 'LBS') {
-      // Convert POUNDS to KG
-      result = (initNum * lbsToKg).toFixed(5)
-    } else if(initUnit === 'kg' || initUnit === 'KG') {
-      // Convert KG to POUNDS
-      result = (initNum / lbsToKg).toFixed(5)
-    }
-
-    return parseFloat(result);
+    result = Number(result);
+    // FOR TESTING PURPOSES ONLY:
+//    console.log('convert: ', result);
+    return result;
   };
+
+
+//  >>>>>>  WORKING GETSTRING FUNCTION    <<<<<<
+  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+    let result;
+     
+    result = `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
+
+    // FOR TESTING PURPOSES ONLY:
+//    console.log('getString', result);
+    return result;
+  };
+
+
+/*
+//  >>>>>>  ALTERNATIVE WORKING GETSTRING FUNCTION    <<<<<<
+  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+    let result;
+
+    result =
+      initNum +
+      " " +
+      this.spellOutUnit(initUnit) +
+      " converts to " +
+      returnNum +
+      " " +
+      this.spellOutUnit(returnUnit);
+
+    // FOR TESTING PURPOSES ONLY:
+    console.log('getString', result);
+    return result;
+=======
   
   this.getString = function(initNum, returnNum, initUnit, returnUnit, initUnitString, returnUnitString) {
     console.log(typeof(initNum), typeof(initUnit), typeof(returnNum), typeof(returnUnit));
@@ -228,7 +320,10 @@ function ConvertHandler() {
     
   result = `${initNum} ${initUnitString} converts to ${returnNum} ${returnUnitString}`;
   return result;
+>>>>>>> 2d63f9d7e1e37af9b78dc7107b52af063b53a4c1
   };
-  
+*/
+
 }
+
 module.exports = ConvertHandler;
