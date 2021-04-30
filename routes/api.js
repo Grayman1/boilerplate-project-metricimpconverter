@@ -16,9 +16,9 @@ module.exports = function(app) {
       var initUnitString = convertHandler.spellOutUnit(initUnit);
       var returnUnitString = convertHandler.spellOutUnit(returnUnit);
 
-      var toString = convertHandler.getString(initNum, returnNum, initUnitString, returnUnitString);
-
-  
+      var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
+      // FOR TESTING PURPOSES ONLY:
+//    console.log("initNum: ", initNum, typeof(initNum), "initUnit: ", initUnit, typeof(initUnit),"returnNum: ", returnNum, typeof(returnNum),"returnUnit: ", returnUnit, typeof(returnUnit),"toString: ", toString, typeof(toString));
 
 
       if(initUnit === 'invalid unit' && initNum === 'invalid number') {
