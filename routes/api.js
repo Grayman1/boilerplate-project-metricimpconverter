@@ -18,7 +18,7 @@ module.exports = function(app) {
 
       var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
       // FOR TESTING PURPOSES ONLY:
-    //  console.log("initNum: ", initNum, typeof(initNum), "initUnit: ", initUnit, typeof(initUnit),"returnNum: ", returnNum, typeof(returnNum),"returnUnit: ", returnUnit, typeof(returnUnit),"toString: ", toString, typeof(toString));
+    /*  console.log("initNum: ", initNum, typeof(initNum), "initUnit: ", initUnit, typeof(initUnit),"returnNum: ", returnNum, typeof(returnNum),"returnUnit: ", returnUnit, typeof(returnUnit),"toString: ", toString, typeof(toString));*/
 
 
       if(initUnit === 'invalid unit' && initNum === 'invalid number') {
