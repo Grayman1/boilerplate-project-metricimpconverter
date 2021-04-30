@@ -43,11 +43,11 @@ suite("Unit Tests", function() {
     test("#6 - no numeric input - default to a numerical input of 1", done => {
       var input = "kg";
       assert.equal(convertHandler.getNum(input), 1);
-   assert.equal(convertHandler.getUnit(input), 'L');
+      assert.equal(convertHandler.getUnit(input), 'kg');
    done();
    })
   })
-})
+
 
  suite("function convertHandler.getUnit(input)", () => {
 // Unit Test #7. convertHandler should correctly read each valid input unit.    
